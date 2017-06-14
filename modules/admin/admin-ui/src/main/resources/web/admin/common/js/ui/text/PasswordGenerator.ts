@@ -3,6 +3,7 @@ module api.ui.text {
     import StringHelper = api.util.StringHelper;
     import NumberHelper = api.util.NumberHelper;
     import ArrayHelper = api.util.ArrayHelper;
+    import i18n = api.util.i18n;
 
     enum CharType {
         SPECIAL,
@@ -16,6 +17,7 @@ module api.ui.text {
         private input: PasswordInput;
         private showLink: api.dom.AEl;
         private generateLink: api.dom.AEl;
+        private complexityHolder: api.dom.DivEl;
 
         private complexity: string;
 
@@ -46,6 +48,10 @@ module api.ui.text {
             inputWrapper.appendChild(this.input);
 
             this.showLink = new api.dom.AEl('show-link');
+            this.showLink.appendChildren(
+                new api.dom.SpanEl('show-link__show').setHtml(i18n('field.pswGenerator.show')),
+                new api.dom.SpanEl('show-link__hide').setHtml(i18n('field.pswGenerator.hide'))
+            );
             this.initFocusEvents(this.showLink);
             this.showLink.onClicked((event: MouseEvent) => {
                 let unlocked = this.hasClass('unlocked');
@@ -58,7 +64,7 @@ module api.ui.text {
             this.appendChild(this.showLink);
 
             this.generateLink = new api.dom.AEl();
-            this.generateLink.setHtml('Generate');
+            this.generateLink.setHtml(i18n('field.pswGenerator.generate'));
             this.initFocusEvents(this.generateLink);
             this.generateLink.onClicked((event: MouseEvent) => {
                 this.generatePassword();
@@ -69,6 +75,9 @@ module api.ui.text {
                 return false;
             });
             this.appendChild(this.generateLink);
+
+            this.complexityHolder = new api.dom.DivEl('complexity');
+            inputWrapper.appendChild(this.complexityHolder);
         }
 
         doGetValue(): string {
@@ -102,7 +111,8 @@ module api.ui.text {
         private assessComplexity(value: string) {
             if (this.complexity) {
                 this.removeClass(this.complexity);
-                this.complexity = undefined;
+                this.complexity = null;
+                this.complexityHolder.setHtml('');
             }
             if (this.isExtreme(value)) {
                 this.complexity = 'extreme';
@@ -115,6 +125,7 @@ module api.ui.text {
             }
             if (this.complexity) {
                 this.addClass(this.complexity);
+                this.complexityHolder.setHtml(i18n(`field.pswGenerator.complexity.${this.complexity}`));
             }
         }
 
