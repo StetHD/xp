@@ -21,18 +21,15 @@
           opacity: 1;
         }
 
-        span {
+        .button__label {
           background: @admin-blue;
         }
       }
 
-      span:empty {
-        display: none;
-      }
-      span {
+      .button__label {
         position: relative;
         top: 1px;
-        display: block;
+        display: inline-block;
         width: 18px;
         height: 18px;
         line-height: 18px;
@@ -42,43 +39,39 @@
         text-align: center;
         background: @form-button-bg-hover;
         color: @admin-white !important;
+
+        &:empty {
+          display: none;
+          & + * {
+            display: none;
+          }
+        }
       }
 
-      &.updated span {
+      &.updated .button__label {
         animation: grow 200ms linear;
       }
 
-      &.size-1 span {
+      &.size-1 .button__label {
         font-size: 13px;
       }
 
-      &.size-2 span {
+      &.size-2 .button__label {
         font-size: 11px;
       }
 
-      &.size-3 span {
+      &.size-3 .button__label {
         font-size: 9px;
       }
 
-      &.size-4 span {
+      &.size-4 .button__label {
         font-size: 7px;
       }
 
-      &.single-item:after, &.multiple-items:after {
-        display: block;
+      .description {
+        display: inline-block;
         font-size: 15px;
-        position: absolute;
-        top: 0;
-        left: 37px;
-        height: 39px;
-        width: 48px;
-      }
-
-      &.single-item:after {
-        content: 'item';
-      }
-      &.multiple-items:after {
-        content: 'items';
+        padding-left: 3px;
       }
 
       &:disabled:after {
@@ -103,7 +96,7 @@
       }
     }
 
-    &:active, span {
+    &:active, .button__label {
       color: @admin-button-blue2;
     }
 

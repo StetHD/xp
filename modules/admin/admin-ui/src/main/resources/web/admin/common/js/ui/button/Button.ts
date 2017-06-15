@@ -7,7 +7,7 @@ module api.ui.button {
         constructor(label?: string) {
             super('button');
 
-            this.labelEl = new api.dom.SpanEl();
+            this.labelEl = new api.dom.SpanEl('button__label');
             if (label) {
                 this.labelEl.getEl().setInnerHtml(label, false);
             }
