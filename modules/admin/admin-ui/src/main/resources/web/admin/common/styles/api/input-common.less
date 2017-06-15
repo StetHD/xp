@@ -166,7 +166,7 @@
       padding-right: 100px;
     }
 
-    &:after {
+    .status {
       position: absolute;
       top: 7px;
       right: 7px;
@@ -174,15 +174,22 @@
   }
 
   &.valid-regexp {
-    &:after {
-      content: 'Valid';
+    input {
+      padding-right: 40px;
+    }
+
+    .status {
+      color: @admin-level-1;
     }
   }
 
   &.invalid-regexp {
-    &:after {
-      content: 'Invalid value';
+    input {
+      padding-right: 50px;
+    }
+
+    .status {
+      color: @admin-level-3;
     }
   }
-
 }

@@ -5,15 +5,20 @@ module api.form.inputtype.text {
     import Value = api.data.Value;
     import ValueType = api.data.ValueType;
     import ValueTypes = api.data.ValueTypes;
+    import i18n = api.util.i18n;
 
     export class TextLine extends support.BaseInputTypeNotManagingAdd<string> {
 
         private regexpStr: string;
         private regexp: RegExp;
+        private status: api.dom.DivEl;
 
         constructor(config: api.form.inputtype.InputTypeViewContext) {
             super(config);
             this.readConfig(config.inputConfig);
+            if (this.regexpStr) {
+                this.status = new api.dom.DivEl('status');
+            }
         }
 
         private readConfig(inputConfig: { [element: string]: { [name: string]: string }[]; }): void {
@@ -78,7 +83,10 @@ module api.form.inputtype.text {
         private isValid(value: string, textInput: api.ui.text.TextInput, silent: boolean = false): boolean {
             let parent = textInput.getParentElement();
             if (!this.regexpStr || api.util.StringHelper.isEmpty(value)) {
-                parent.removeClass('valid-regexp').removeClass('invalid-regexp');
+                parent.removeClass('valid-regexp invalid-regexp');
+                if (this.status) {
+                    this.status.remove();
+                }
                 return true;
             }
             if (!this.regexp) {
@@ -88,6 +96,8 @@ module api.form.inputtype.text {
             if (!silent) {
                 parent.toggleClass('valid-regexp', valid);
                 parent.toggleClass('invalid-regexp', !valid);
+                this.status.setHtml(i18n(`field.${valid ? 'valid' : 'invalid'}`));
+                parent.appendChild(this.status);
             }
             return valid;
         }

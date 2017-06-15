@@ -1,7 +1,3 @@
-@notavailable-color: #ca3319;
-@checking-color: #bd8d05;
-@available-color: #008424;
-
 .email-input {
   position: relative;
 
@@ -24,39 +20,39 @@
 
   &.checking {
     .form-input {
-      .input-border(@checking-color);
-      .input-glow(@checking-color);
+      .input-border(@admin-level-2);
+      .input-glow(@admin-level-2);
     }
   }
 
   &.notavailable {
     .form-input {
-      .input-border(@notavailable-color);
-      .input-glow(@notavailable-color);
+      .input-border(@admin-level-3);
+      .input-glow(@admin-level-3);
     }
 
     .status {
-      color: @notavailable-color;
+      color: @admin-level-3;
     }
   }
 
   &.available {
     &:not(.just-shown) {
       .form-input {
-        .input-border(@available-color);
-        .input-glow(@available-color);
+        .input-border(@admin-level-1);
+        .input-glow(@admin-level-1);
       }
 
       .status {
-        color: @available-color;
+        color: @admin-level-1;
       }
     }
   }
 
   &.error {
     .form-input {
-      .input-border(@notavailable-color);
-      .input-glow(@notavailable-color);
+      .input-border(@admin-level-3);
+      .input-glow(@admin-level-3);
     }
   }
 
