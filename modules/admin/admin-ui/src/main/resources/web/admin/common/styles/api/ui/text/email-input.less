@@ -15,20 +15,17 @@
     .box-sizing(border-box);
   }
 
-  &:after {
+  .status {
     position: absolute;
-    top: 2px;
-    right: 4px;
+    top: 0;
+    right: 5px;
+    line-height: 30px;
   }
 
   &.checking {
     .form-input {
       .input-border(@checking-color);
       .input-glow(@checking-color);
-    }
-
-    &:after {
-      content: 'Checking availability';
     }
   }
 
@@ -38,9 +35,8 @@
       .input-glow(@notavailable-color);
     }
 
-    &:after {
-      color: (@notavailable-color);
-      content: 'Not available';
+    .status {
+      color: @notavailable-color;
     }
   }
 
@@ -51,9 +47,8 @@
         .input-glow(@available-color);
       }
 
-      &:after {
-        color: (@available-color);
-        content: 'Available';
+      .status {
+        color: @available-color;
       }
     }
   }
@@ -63,20 +58,12 @@
       .input-border(@notavailable-color);
       .input-glow(@notavailable-color);
     }
-
-    &:after {
-      content: 'Connection error';
-    }
   }
 
   &.invalid {
     .form-input {
       .input-border(@admin-input-red);
       .input-glow(@admin-input-red);
-    }
-
-    &:after {
-      content: 'Invalid email';
     }
   }
 

@@ -3,6 +3,8 @@ module api.ui.text {
     import InputEl = api.dom.InputEl;
     import StringHelper = api.util.StringHelper;
     import CheckEmailAvailabilityRequest = api.security.CheckEmailAvailabilityRequest;
+    import DivEl = api.dom.DivEl;
+    import i18n = api.util.i18n;
 
     export class EmailInput extends api.dom.CompositeFormInputEl {
 
@@ -11,6 +13,8 @@ module api.ui.text {
         private originEmail: string;
 
         private status: string;
+
+        private statusHolder: DivEl;
 
         private checkTimeout: number;
 
@@ -26,12 +30,16 @@ module api.ui.text {
             this.focusListeners = [];
             this.blurListeners = [];
 
+            this.statusHolder = new DivEl('status');
+
             this.input = this.createInput();
 
             this.setWrappedInput(this.input);
 
             this.addClass('email-input just-shown');
             this.updateStatus('available');
+
+            this.setAdditionalElements(this.statusHolder);
         }
 
         createInput(): InputEl {
@@ -111,13 +119,22 @@ module api.ui.text {
         }
 
         private updateStatus(status?: string) {
-            if (!!this.status) {
+            const isJustShown = this.hasClass('just-shown');
+            const isValid = !this.hasClass('invalid');
+            const isNoStatus = StringHelper.isEmpty(status);
+
+            const hideStatus = isValid && (isJustShown || isNoStatus);
+
+            if (this.status) {
                 this.removeClass(this.status);
             }
-            if (!StringHelper.isEmpty(status)) {
+            if (!isNoStatus) {
                 this.status = status;
                 this.addClass(this.status);
             }
+
+            const statusText = hideStatus ? '' : i18n(`field.emailInput.${isValid ? status : 'invalid'}`);
+            this.statusHolder.setHtml(statusText);
         }
 
         isValid(): boolean {
