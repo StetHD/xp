@@ -22,6 +22,9 @@ import UploadItem = api.ui.uploader.UploadItem;
 import ListContentByPathRequest = api.content.resource.ListContentByPathRequest;
 import LoadMask = api.ui.mask.LoadMask;
 import ContentResponse = api.content.resource.result.ContentResponse;
+import PEl = api.dom.PEl;
+import SpanEl = api.dom.SpanEl;
+import i18n = api.util.i18n;
 
 export class NewContentDialog extends api.ui.dialog.ModalDialog {
 
@@ -163,6 +166,10 @@ export class NewContentDialog extends api.ui.dialog.ModalDialog {
 
         this.appendChildToContentPanel(this.recentContentTypes);
 
+        const dropHint = new PEl('drop-hint');
+        dropHint.setHtml(i18n('drop.file.long'));
+        dropHint.insertBeforeEl(this.getButtonRow());
+
         this.getContentPanel().getParentElement().appendChild(this.loadMask);
     }
 
@@ -287,17 +294,24 @@ export class NewContentDialog extends api.ui.dialog.ModalDialog {
 
 export class NewContentDialogHeader extends api.ui.dialog.ModalDialogHeader {
 
-    private pathEl: api.dom.PEl;
+    private pathEl: PEl;
+    private pathNameEl: SpanEl;
 
     constructor(title: string, path: string) {
         super(title);
 
-        this.pathEl = new api.dom.PEl('path');
-        this.pathEl.setHtml(path);
+        this.pathEl = new PEl('path');
+        const pathDescriptionEl = new SpanEl('description').setHtml(`${i18n('dialog.newContent.pathDescription')}:`);
+        this.pathNameEl = new SpanEl('path-name');
+        this.setPath(path);
+
+        this.pathEl.appendChildren(pathDescriptionEl, this.pathNameEl);
         this.appendChild(this.pathEl);
+
     }
 
     setPath(path: string) {
-        this.pathEl.setHtml(path).setVisible(!api.util.StringHelper.isBlank(path));
+        this.pathNameEl.setHtml(path);
+        this.pathEl.setVisible(!api.util.StringHelper.isBlank(path));
     }
 }

@@ -35,10 +35,11 @@
   .dialog-header .path {
     display: none;
     font-size: 16px;
+    overflow: hidden;
+    text-overflow: ellipsis;
 
-    &:before {
+    .description {
       margin-right: 5px;
-      content: 'In:';
       color: @admin-font-gray1;
     }
   }
@@ -169,28 +170,24 @@
 
   }
 
-  .dialog-buttons {
+  .drop-hint {
+    margin: 10px 0 0;
+    line-height: 34px;
+    text-align: center;
+    color: @admin-font-gray1;
 
-    &:before {
-      position: absolute;
-      width: 100%;
-      line-height: 34px;
-      text-align: center;
-      color: @admin-font-gray1;
-      content: 'Drop files here to upload';
-
-      @media screen and (max-height: 360px) {
-        line-height: 70px;
-      }
+    @media screen and (max-height: 360px) {
+      line-height: 70px;
     }
+  }
 
+  .dialog-buttons {
+    margin: 0;
   }
 
   &.no-uploader-el {
-    .dialog-buttons {
-      &:before {
-        content: '';
-      }
+    .drop-hint {
+      display: none;
     }
 
     .file-input {
