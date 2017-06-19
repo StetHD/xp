@@ -9,6 +9,7 @@ import ResolvePublishDependenciesResult = api.content.resource.result.ResolvePub
 import CompareStatus = api.content.CompareStatus;
 import ContentId = api.content.ContentId;
 import ListBox = api.ui.selector.list.ListBox;
+import i18n = api.util.i18n;
 
 export class ContentUnpublishDialog extends ProgressBarDialog {
 
@@ -18,6 +19,7 @@ export class ContentUnpublishDialog extends ProgressBarDialog {
             'Unpublish item',
             '<b>Take offline?</b> - Unpublishing selected item(s) will set status back to offline',
             'Dependent items - Clean up references to selected item(s) or click unpublish to take all items offline',
+            `${i18n('field.progress.unpublishing')}...`,
             'is-unpublishing',
             () => {
                 new ContentUnpublishPromptEvent([]).fire();

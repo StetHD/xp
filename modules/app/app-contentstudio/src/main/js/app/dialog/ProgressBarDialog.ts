@@ -15,14 +15,18 @@ export class ProgressBarDialog extends DependantItemsDialog {
 
     private progressBar: api.ui.ProgressBar;
 
+    private processingProgressLabel: string;
+
     private isProcessingClass: string;
 
     private processHandler: () => void;
 
-    constructor(dialogName: string, dialogSubName: string, dependantsName: string, isProcessingClass: string, processHandler: () => void) {
+    constructor(dialogName: string, dialogSubName: string, dependantsName: string,
+                processingProgressLabel: string, isProcessingClass: string, processHandler: () => void) {
         super(dialogName, dialogSubName, dependantsName);
         this.isProcessingClass = isProcessingClass;
         this.processHandler = processHandler;
+        this.processingProgressLabel = processingProgressLabel;
     }
 
     protected createProgressBar() {
@@ -42,6 +46,7 @@ export class ProgressBarDialog extends DependantItemsDialog {
         api.dom.Body.get().addClass(this.isProcessingClass);
 
         MenuButtonProgressBarManager.getProgressBar().setValue(0);
+        MenuButtonProgressBarManager.getProgressBar().setLabel(this.processingProgressLabel);
         this.unlockControls();
         this.progressBar = this.createProgressBar();
         MenuButtonProgressBarManager.updateProgressHandler(this.processHandler);

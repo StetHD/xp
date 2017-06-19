@@ -17,6 +17,7 @@ import ContentSummaryAndCompareStatusViewer = api.content.ContentSummaryAndCompa
 import Checkbox = api.ui.Checkbox;
 import HasUnpublishedChildrenResult = api.content.resource.result.HasUnpublishedChildrenResult;
 import HasUnpublishedChildrenRequest = api.content.resource.HasUnpublishedChildrenRequest;
+import i18n = api.util.i18n;
 
 /**
  * ContentPublishDialog manages list of initially checked (initially requested) items resolved via ResolvePublishDependencies command.
@@ -39,6 +40,7 @@ export class ContentPublishDialog extends ProgressBarDialog {
             'Publishing Wizard',
             'Resolving items...',
             'Other items that will be published',
+            `${i18n('field.progress.publishing')}...`,
             'is-publishing',
             () => {
                 new ContentPublishPromptEvent([]).fire();
