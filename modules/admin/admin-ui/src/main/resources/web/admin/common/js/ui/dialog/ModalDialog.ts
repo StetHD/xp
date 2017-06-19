@@ -2,6 +2,7 @@ module api.ui.dialog {
 
     import DivEl = api.dom.DivEl;
     import ResponsiveRanges = api.ui.responsive.ResponsiveRanges;
+    import i18n = api.util.i18n;
 
     export class ModalDialog extends api.dom.DivEl {
 
@@ -164,6 +165,7 @@ module api.ui.dialog {
             cancelAction.setIconClass('cancel-button-bottom');
             cancelAction.onExecuted(() => this.cancelAction.execute());
             this.buttonRow.addAction(cancelAction);
+            this.buttonRow.getLastButton().getEl().setAttribute('data-button-text', i18n('action.ok'));
         }
 
         setTitle(value: string) {
